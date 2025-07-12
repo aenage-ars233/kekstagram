@@ -1,3 +1,4 @@
 import { getPictures } from './modules/data.js';
+import { renderPictures } from './modules/pictures.js';
 
-getPictures();
+console.log(renderPictures(getPictures()));
