@@ -34,7 +34,7 @@ function createPicture (_, currentPictureIndex) {
     url: `photos/${currentPictureIndex + 1}.jpg`,
     description: getRandomArrayElement(descriptions),
     likes: getRandomPositiveInteger(15, 200),
-    comments: Array.from({length: 3}, getComment)
+    comments: Array.from({length: getRandomPositiveInteger(10, 50)}, getComment)
   };
 }
 
