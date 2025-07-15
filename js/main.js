@@ -1,4 +1,6 @@
 import { getPictures } from './modules/data.js';
 import { renderPictures } from './modules/pictures.js';
+import './modules/upload-form.js';
 
-console.log(renderPictures(getPictures()));
+renderPictures(getPictures());
+
