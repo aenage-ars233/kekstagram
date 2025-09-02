@@ -1,3 +1,6 @@
+import { resetScale } from './scale.js';
+import './effect.js';
+
 const body = document.body;
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadFileField = uploadForm.querySelector('#upload-file');
@@ -16,6 +19,7 @@ function hideModal () {
   uploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   uploadForm.reset();
+  resetScale();
   cancelButton.removeEventListener('click', hideModal);
   document.removeEventListener('keydown', onEscHideModal);
 }
@@ -36,6 +40,7 @@ function showModal () {
   body.classList.add('modal-open');
   cancelButton.addEventListener('click', hideModal);
   document.addEventListener('keydown', onEscHideModal);
+  resetScale();
 }
 
 uploadFileField.addEventListener('change', () => {
