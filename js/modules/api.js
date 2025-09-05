@@ -15,8 +15,20 @@ function getData(onSuccess, onError) {
     });
 }
 
-function sendData() {
-
+function sendData(onSuccess, onError, data) {
+  fetch('https://25.javascript.htmlacademy.pro/kekstagram', {
+    method: 'POST',
+    body: data,
+  }
+  ).then((responce) => {
+    if (responce.ok) {
+      onSuccess();
+    } else {
+      onError();
+    }
+  }).catch(() => {
+    onError();
+  });
 }
 
 export {getData, sendData};

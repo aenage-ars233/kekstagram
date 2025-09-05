@@ -1,13 +1,17 @@
 import { resetScale } from './scale.js';
 import './effect.js';
+import { sendData } from './api.js';
 
 const body = document.body;
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadFileField = uploadForm.querySelector('#upload-file');
 const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
+const submitButton = uploadForm.querySelector('#upload-submit');
 const cancelButton = uploadOverlay.querySelector('#upload-cancel');
 const hashtagField = uploadForm.querySelector('.text__hashtags');
 const commentField = uploadForm.querySelector('.text__description');
+const successTemplate = document.querySelector('#success').content.querySelector('.success').cloneNode(true);
+const errorTemplate = document.querySelector('#error').content.querySelector('.error').cloneNode(true);
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__element',
@@ -81,8 +85,43 @@ function validateTags (value) {
 
 pristine.addValidator(hashtagField, validateTags, 'Неправильно заполнены хэштеги!');
 
+function onSuccessSubmit() {
+  hideModal();
+  submitButton.disabled = false;
+  document.body.append(successTemplate);
+  const successTemplateButton = successTemplate.querySelector('.success__button');
+  successTemplateButton.addEventListener('click', () => {
+    successTemplate.remove();
+  }, {once: true});
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      successTemplate.remove();
+    }
+  }, {once: true});
+}
+
+function onErrorSubmit() {
+  hideModal();
+  submitButton.disabled = false;
+  document.body.append(errorTemplate);
+  const errorTemplateButton = errorTemplate.querySelector('.error__button');
+  errorTemplateButton.addEventListener('click', () => {
+    errorTemplate.remove();
+  }, {once: true});
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      errorTemplate.remove();
+    }
+  }, {once: true});
+}
+
 uploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
+  submitButton.disabled = true;
   if (pristine.validate()) {
+    const formData = new FormData(uploadForm);
+    sendData(onSuccessSubmit, onErrorSubmit, formData);
   }
 });
