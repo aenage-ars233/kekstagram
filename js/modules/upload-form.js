@@ -83,5 +83,6 @@ pristine.addValidator(hashtagField, validateTags, 'Неправильно зап
 
 uploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  pristine.validate();
+  if (pristine.validate()) {
+  }
 });
