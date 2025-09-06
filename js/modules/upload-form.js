@@ -1,3 +1,4 @@
+import './preview.js';
 import { resetScale } from './scale.js';
 import './effect.js';
 import { sendData } from './api.js';
