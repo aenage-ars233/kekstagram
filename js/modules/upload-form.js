@@ -26,6 +26,7 @@ function hideModal () {
   uploadForm.reset();
   resetScale();
   cancelButton.removeEventListener('click', hideModal);
+  submitButton.disabled = false;
   document.removeEventListener('keydown', onEscHideModal);
 }
 
@@ -79,9 +80,13 @@ function hasValidCount (tags) {
   return tags.length <= MAX_HASHTAG_COUNT;
 }
 
+function hasSimilarTags(tags) {
+  return tags.length > new Set(tags).size;
+}
+
 function validateTags (value) {
   const tags = value.trim().split(' ').filter((tag) => tag.trim().length);
-  return hasValidCount(tags) && tags.every(isValidTag);
+  return hasValidCount(tags) && tags.every(isValidTag) && !hasSimilarTags(tags);
 }
 
 pristine.addValidator(hashtagField, validateTags, 'Неправильно заполнены хэштеги!');
@@ -120,8 +125,8 @@ function onErrorSubmit() {
 
 uploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  submitButton.disabled = true;
   if (pristine.validate()) {
+    submitButton.disabled = true;
     const formData = new FormData(uploadForm);
     sendData(onSuccessSubmit, onErrorSubmit, formData);
   }
