@@ -41,12 +41,15 @@ function filterDiscussed(pictures) {
 }
 
 function setFilters(pictures) {
+  let timeoutId;
   filtersElement.classList.remove('img-filters--inactive');
   filtersElement.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('img-filters__button')) {
       activeFilter.classList.remove('img-filters__button--active');
       evt.target.classList.add('img-filters__button--active');
       activeFilter = evt.target;
+
+      clearTimeout(timeoutId);
 
       const toFilter = () => {
         if (activeFilter.id === 'filter-default') {
@@ -60,7 +63,7 @@ function setFilters(pictures) {
         }
       };
 
-      toFilter();
+      timeoutId = setTimeout(toFilter, 500);
     }
   });
 }

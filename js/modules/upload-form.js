@@ -85,7 +85,7 @@ function hasSimilarTags(tags) {
 }
 
 function validateTags (value) {
-  const tags = value.trim().split(' ').filter((tag) => tag.trim().length);
+  const tags = value.trim().toLowerCase().split(' ').filter((tag) => tag.trim().length);
   return hasValidCount(tags) && tags.every(isValidTag) && !hasSimilarTags(tags);
 }
 
