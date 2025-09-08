@@ -35,12 +35,4 @@ function showAlert(message) {
   }, 5000);
 }
 
-function debounce(callback, timeoutDelay) {
-  let timeoutId;
-  return function() {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => callback(), timeoutDelay);
-  };
-}
-
-export {getRandomArrayElement, getRandomPositiveInteger, checkStringLength, showAlert, debounce};
+export {getRandomArrayElement, getRandomPositiveInteger, checkStringLength, showAlert};
